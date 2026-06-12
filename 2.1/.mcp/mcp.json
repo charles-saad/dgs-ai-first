@@ -1,0 +1,72 @@
+{
+  "_documentation": {
+    "purpose": "Servidores MCP locais para o repositório NovaTech.",
+    "requirements": [
+      "Python 3.10+ com o comando 'python' disponível no PATH.",
+      "Instalar a dependência MCP: python -m pip install mcp"
+    ],
+    "usageSteps": [
+      "1. Certifique-se de que o Python está disponível no terminal.",
+      "2. Instale a dependência MCP com python -m pip install mcp.",
+      "3. Inicie os servidores via este arquivo de configuração no agente que for usar o MCP.",
+      "4. Use prompts curtos e específicos para pedir leitura, busca ou histórico do repositório."
+    ],
+    "examplePrompts": {
+      "filesystem": [
+        "Leia o documento docs/novatech/README.md e resuma as regras principais.",
+        "Encontre trechos sobre SLA no diretório data/retrieval-corpus.",
+        "Liste os arquivos em src e leia o handler do endpoint de query."
+      ],
+      "git": [
+        "Mostre o status do repositório e os últimos 3 commits.",
+        "Liste as branches locais e o histórico recente."
+      ],
+      "memory": [
+        "Leia a memória persistente do projeto.",
+        "Adicione uma decisão sobre a política de contexto do assistente."
+      ]
+    }
+  },
+  "mcpServers": {
+    "filesystem": {
+      "command": "python",
+      "args": [
+        ".mcp/servers/filesystem_server.py",
+        "--root",
+        ".",
+        "--allowed",
+        "src",
+        "--allowed",
+        "specs",
+        "--allowed",
+        "skills",
+        "--allowed",
+        "prompts",
+        "--allowed",
+        "tests",
+        "--allowed",
+        "docs/novatech",
+        "--allowed",
+        "data/retrieval-corpus",
+        "--allowed",
+        ".mcp"
+      ]
+    },
+    "git": {
+      "command": "python",
+      "args": [
+        ".mcp/servers/git_server.py",
+        "--repository",
+        "."
+      ]
+    },
+    "memory": {
+      "command": "python",
+      "args": [
+        ".mcp/servers/memory_server.py",
+        "--store",
+        ".mcp/memory.json"
+      ]
+    }
+  }
+}
